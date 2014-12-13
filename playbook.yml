@@ -1,0 +1,32 @@
+---
+-   hosts: all
+    user: vagrant
+    sudo: true
+    sudo_user: root
+    tasks:
+    -   name: JDK | Install repo ppa
+        apt_repository: repo='ppa:webupd8team/java' state=present
+
+    -   name: JDK | Automatically select the Oracle License
+        shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+
+    -   name: JDK | Install oracle-java8-installer
+        apt: name=oracle-java8-installer state=present force=yes update_cache=yes
+    
+    -   name: JDK | Install oracle-java8-set-default 
+        apt: name=oracle-java8-set-default state=present
+
+    -   name: MongoDB | Fetch 10Gen signing key
+        shell: apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+
+    -   name: MongoDB | Add 10Gen repository
+        shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+    -   name: MongoDB | Install latest MongoDB release 
+        apt: name=mongodb-10gen state=present update_cache=yes
+
+    -   name: MongoDB | Ensure deamon is running correctly
+        service: name=mongodb state=started
+
+    -   name: RESTHeart | Run
+        shell: nohup java -server -jar /vagrant/restheart-0.9.3/restheart.jar > /vagrant/restheart.log &
