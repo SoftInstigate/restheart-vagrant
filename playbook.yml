@@ -28,5 +28,5 @@
     -   name: MongoDB | Ensure deamon is running correctly
         service: name=mongodb state=started
 
-    -   name: RESTHeart | Run
+    -   name: RESTHeart | Run the REST API Server in background
         shell: nohup java -server -jar /vagrant/restheart-0.9.3/restheart.jar > /vagrant/restheart.log &
