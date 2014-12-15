@@ -26,4 +26,10 @@
         apt: name=mongodb-10gen state=present update_cache=yes
 
     -   name: MongoDB | Ensure deamon is running correctly
-        service: name=mongodb state=started
+        service: name=mongodb enabled=yes state=started
+
+    -   name: RESTHeart | Copy resthartd.conf
+        copy: src=restheart-0.9.3/etc/restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644
+
+    -   name: RESTHeart | Enable service
+        service: name=restheartd enabled=yes state=started
