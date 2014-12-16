@@ -4,6 +4,7 @@
     sudo: true
     sudo_user: root
     tasks:
+
     -   name: JDK | Install repo ppa
         apt_repository: repo='ppa:webupd8team/java' state=present
 
@@ -22,11 +23,11 @@
     -   name: MongoDB | Add 10Gen repository
         shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 
-    -   name: MongoDB | Install latest MongoDB release 
-        apt: name=mongodb-10gen state=present update_cache=yes
+    -   name: MongoDB | Install 
+        apt: name=mongodb-org=2.6.6 state=present update_cache=yes
 
     -   name: MongoDB | Ensure deamon is running correctly
-        service: name=mongodb enabled=yes state=started
+        service: name=mongod enabled=yes state=started
 
     -   name: RESTHeart | Copy resthartd.conf
         copy: src=restheart-0.9.3/etc/restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644

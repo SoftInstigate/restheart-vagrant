@@ -2,23 +2,28 @@
 
 This is a complete Vagrant box for [RESTHart](http://restheart.org). It uses the [Ansible provisioner](https://docs.vagrantup.com/v2/provisioning/ansible.html).
 
-Tested with Virtualbox `4.3.20` and Vagrant `1.7.0`.
+**Tested with:**
+
+ * Virtualbox `4.3.20`
+ * Vagrant `1.7.0`
+ * Mongodb `2.6.6`
+ * RESTHeart `0.9.3`
 
 The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds:
 
- * Java JDK 8
- * MongoDB server (2.6 at present)
+ * Java 8
+ * MongoDB
  * RESTHeart Java API Server
 
 ## Setup ##
 
-**Note**: You must have [Python](https://www.python.org/downloads/) 2.6+ installed in your host. Ansible doesn't support Python 3 yet. Python 2.x is installed by default on most Linux versions and Mac OSX. For Windows you can go [here](https://www.python.org/downloads/release/python-279/).
+**Note**: You must have at least [Python](https://www.python.org/downloads/) 2.6+ installed in your host. Ansible doesn't support Python 3 yet. Python 2.x is installed by default on most Linux versions and Mac OSX. For Windows you can go [here](https://www.python.org/downloads/release/python-279/).
 
  1. Install [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
  1. Install [Vagrant](https://www.vagrantup.com/downloads.html) 1.6+
- 1. Install [Ansible](http://docs.ansible.com/intro_installation.html). Probably the most common way is via [Python's pip](http://docs.ansible.com/intro_installation.html#latest-releases-via-pip)
+ 1. Install [Ansible](http://docs.ansible.com/intro_installation.html).
 
-Ansible can be installed via `pip`, the Python package manager. If `pip` isn’t already available in your version of Python, you can get pip by:
+Ansible can be universally installed via `pip`, the Python package manager. If `pip` isn’t already available in your distribution of Python, you can get pip by:
 
     $ sudo easy_install pip
 
@@ -31,31 +36,42 @@ Then install Ansible with:
 
  1. Clone this Git repository, it already contains the latest RESTHeart JAR file under the `restheart-0.9.3` folder.
  1. `cd` into the cloned repository folder
- 1. run `vagrant up --provision`. It will take a while as needs to download and install both JDK 8 and MongoDB.
+ 1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8 and all MongoDB packages.
 
- ## Run the RESTHeart Service ##
+ ## The RESTHeart Service ##
 
-To start RESTHeart in background run the `start.sh` command. You can `tail -f restheart.log` to verify that everything is up and running. The output should be similar to:
+RESTHeart is installed in background as a system service named `restheartd`, which starts automatically at boot. It reads at startup the `restheart.yml` and `security.yml` configuration files present in `restheart-0.9.3/etc` folder. You can `tail -f restheart.log` in the `/vagrant` shared folder to verify that everything is up and running. The output should be similar to:
 
-    11:37:20.322 [main] INFO  c.s.restheart.Bootstrapper - starting RESTHeart ********************************************
-    11:37:20.334 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.9.3
-    11:37:20.472 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017 
-    11:37:20.475 [main] INFO  c.s.restheart.Bootstrapper - mongodb connection pool initialized
-    11:37:21.122 [main] WARN  c.s.restheart.Bootstrapper - ***** no identity manager specified. authentication disabled.
-    11:37:21.123 [main] WARN  c.s.restheart.Bootstrapper - ***** no access manager specified. users can do anything.
-    11:37:21.550 [main] INFO  c.s.restheart.Bootstrapper - https listener bound at 0.0.0.0:4443
-    11:37:21.552 [main] INFO  c.s.restheart.Bootstrapper - http listener bound at 0.0.0.0:8080
-    11:37:21.559 [main] INFO  c.s.restheart.Bootstrapper - local cache enabled
-    11:37:21.612 [main] INFO  c.s.restheart.Bootstrapper - url / bound to mongodb resource *
-    11:37:21.929 [main] INFO  c.s.restheart.Bootstrapper - embedded static resources browser extracted in /tmp/restheart-5638391690370374596
-    11:37:21.955 [main] INFO  c.s.restheart.Bootstrapper - url /browser bound to static resources browser. access manager: false
-    11:37:22.366 [main] INFO  c.s.restheart.Bootstrapper - logging to /tmp/restheart.log with level INFO
-    11:37:22.367 [main] INFO  c.s.restheart.Bootstrapper - logging to console with level INFO
-    11:37:22.368 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart started **********************************************
+    23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - starting RESTHeart ********************************************
+    23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.9.3
+    23:46:26.219 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017 
+    23:46:26.222 [main] INFO  c.s.restheart.Bootstrapper - mongodb connection pool initialized
+    23:46:27.298 [main] INFO  c.s.restheart.Bootstrapper - https listener bound at 0.0.0.0:4443
+    23:46:27.299 [main] INFO  c.s.restheart.Bootstrapper - http listener bound at 0.0.0.0:8080
+    23:46:27.305 [main] INFO  c.s.restheart.Bootstrapper - local cache enabled
+    23:46:27.411 [main] INFO  c.s.restheart.Bootstrapper - url / bound to mongodb resource *
+    23:46:27.594 [main] INFO  c.s.restheart.Bootstrapper - embedded static resources browser extracted in /tmp/restheart-4821268372483417156
+    23:46:27.609 [main] INFO  c.s.restheart.Bootstrapper - url /browser bound to static resources browser. access manager: false
+    23:46:27.612 [main] INFO  c.s.restheart.Bootstrapper - url /_logic/ping bound to application logic handler com.softinstigate.restheart.handlers.applicationlogic.PingHandler. access manager: false
+    23:46:27.621 [main] INFO  c.s.restheart.Bootstrapper - url /_logic/roles/mine bound to application logic handler com.softinstigate.restheart.handlers.applicationlogic.GetRoleHandler. access manager: false
+    23:46:27.925 [main] INFO  c.s.restheart.Bootstrapper - logging to /vagrant/restheart.log with level INFO
+    23:46:27.925 [main] INFO  c.s.restheart.Bootstrapper - stopping logging to console 
+    23:46:27.926 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart started **********************************************
 
-To stop the service, just kill the java process.
+To control the service, you can `vagrant ssh` into the guest box and type
+
+    sudo service restheartd [stop|start|restart]
 
 ## Use RESTHeart ##
 
-Connect to [`http://localhost:8080/browser`](http://localhost:8080/browser) to access the HAL browser.
-Then have a look at the [documentation](http://restheart.org/docs/overview.html).
+Connect to [`http://localhost:8080/browser`](http://localhost:8080/browser) to access the HAL browser. 
+
+For authentication (see the `security.yml` configuration file):
+
+ * user: `admin`
+ * password: `changeit`
+
+Then have a look at the complete [documentation](http://restheart.org/docs/overview.html).
+
+If you have the MongoDB client installed locally you could also access the database directly from its default port `27017`, simply using the `mongo` command from your host.
+
