@@ -3,6 +3,9 @@
     user: vagrant
     sudo: true
     sudo_user: root
+    vars:
+        version: 0.9.5
+            
     tasks:
 
     -   name: JDK | Install repo ppa
@@ -13,7 +16,7 @@
 
     -   name: JDK | Install oracle-java8-installer
         apt: name=oracle-java8-installer state=present force=yes update_cache=yes
-    
+   
     -   name: JDK | Install oracle-java8-set-default 
         apt: name=oracle-java8-set-default state=present
 
@@ -29,8 +32,21 @@
     -   name: MongoDB | Ensure deamon is running correctly
         service: name=mongod enabled=yes state=started
 
+    -   name: RESTHeart | Download latest stable release
+        get_url: url=https://github.com/SoftInstigate/restheart/releases/download/{{ version }}/restheart-{{ version }}.tar.gz dest=/vagrant/restheart.tar.gz timeout=30
+        register: download_restheart
+
+    -   name: RESTHeart | unarchive
+        unarchive: src=restheart.tar.gz dest=/vagrant
+        when: download_restheart.changed
+
+    -   name: RESTHEart | Create symlink
+        file: src=restheart-{{ version }} dest=/vagrant/restheart owner=vagrant state=link
+        when: download_restheart.changed
+
     -   name: RESTHeart | Copy resthartd.conf
-        copy: src=restheart-0.9.3/etc/restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644
+        copy: src=restheart-{{ version }}/etc/restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644
+        when: download_restheart.changed
 
     -   name: RESTHeart | Enable service
         service: name=restheartd enabled=yes state=started
