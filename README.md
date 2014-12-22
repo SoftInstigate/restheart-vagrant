@@ -9,7 +9,7 @@ This is a complete Vagrant box for [RESTHart](http://restheart.org) REST API Ser
  * Virtualbox `4.3.20`
  * Vagrant `1.7.0`
  * Mongodb `2.6.6`
- * RESTHeart `0.9.3`
+ * RESTHeart `0.9.5`
 
 The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds:
 
@@ -36,16 +36,16 @@ Then install Ansible with:
 
 ## Start the Vagrant box ##
 
- 1. Clone this Git repository, it already contains the latest RESTHeart JAR file under the `restheart-0.9.3` folder.
+ 1. Clone this Git repository
  1. `cd` into the cloned repository folder
- 1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8 and all MongoDB packages.
+ 1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8, all MongoDB packages and the **latest binary release of RESTHeart**.
 
  ## The RESTHeart Service ##
 
-RESTHeart is installed in background as a system service named `restheartd`, which starts automatically at boot. It reads at startup the `restheart.yml` and `security.yml` configuration files present in `restheart-0.9.3/etc` folder. You can `tail -f restheart.log` in the `/vagrant` shared folder to verify that everything is up and running. The output should be similar to:
+RESTHeart is installed in background as a system service named `restheartd`, which starts automatically at boot. It reads at startup the `restheart.yml` and `security.yml` configuration files present in `restheart/etc` folder. You can `tail -f restheart.log` in the `/vagrant` shared folder to verify that everything is up and running. The output should be similar to:
 
     23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - starting RESTHeart ********************************************
-    23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.9.3
+    23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.9.5
     23:46:26.219 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017 
     23:46:26.222 [main] INFO  c.s.restheart.Bootstrapper - mongodb connection pool initialized
     23:46:27.298 [main] INFO  c.s.restheart.Bootstrapper - https listener bound at 0.0.0.0:4443
@@ -74,6 +74,3 @@ For authentication (see the `security.yml` configuration file):
  * password: `changeit`
 
 Then have a look at the complete [documentation](http://restheart.org/docs/overview.html).
-
-If you have the MongoDB client installed locally you could also access the database directly from its default port `27017`, simply using the `mongo` command from your host.
-
