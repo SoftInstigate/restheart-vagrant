@@ -4,7 +4,7 @@
     sudo: true
     sudo_user: root
     vars:
-        version: 0.9.5
+        version: 0.9.6
             
     tasks:
 
@@ -27,7 +27,7 @@
         shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 
     -   name: MongoDB | Install 
-        apt: name=mongodb-org=2.6.6 state=present update_cache=yes cache_valid_time=86400
+        apt: name=mongodb-org=2.6.6 state=present update_cache=yes
 
     -   name: MongoDB | Ensure deamon is running correctly
         service: name=mongod enabled=yes state=started
