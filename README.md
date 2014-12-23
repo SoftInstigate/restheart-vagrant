@@ -8,7 +8,7 @@ This is a complete Vagrant box for [RESTHart](http://restheart.org) REST API Ser
 
  * Virtualbox `4.3.20`
  * Vagrant `1.7.0`
- * Mongodb `2.6.6`
+ * MongoDB `2.6.6`
  * RESTHeart `0.9.5`
 
 The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds:
@@ -40,7 +40,7 @@ Then install Ansible with:
  1. `cd` into the cloned repository folder
  1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8, all MongoDB packages and the **latest binary release of RESTHeart**.
 
- > In case the mongod service doesn't start automatically, you could either run `vagrnat provision` again or log-in the VM (`vagrant ssh`) and issue `sudo service mongod start`
+ > In case the mongod service doesn't start automatically, you could either run `vagrant provision` again or log-in the VM (`vagrant ssh`) and issue `sudo service mongod start`
 
  ## The RESTHeart Service ##
 
@@ -72,6 +72,6 @@ To control the service, you can `vagrant ssh` into the guest box and type
 
 ## Use RESTHeart ##
 
-If everything went fine, a running RESTheart server is listening at port 8080 and you could verify that by connecting to the embedded [HAL browser](http://localhost:8080/browser). 
+If everything went fine, a running RESTHeart server is listening at port 8080 and you could verify that by connecting to the embedded [HAL browser](http://localhost:8080/browser). 
 
 Then have a look at the complete [documentation](http://restheart.org/docs/overview.html) for the next steps.
