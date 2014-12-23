@@ -6,10 +6,10 @@ This is a complete Vagrant box for [RESTHart](http://restheart.org) REST API Ser
 
 **Tested with:**
 
- * Virtualbox `4.3.20`
- * Vagrant `1.7.0`
- * MongoDB `2.6.6`
- * RESTHeart `0.9.5`
+ * Virtualbox `4.3.x`
+ * Vagrant `1.7.x`
+ * MongoDB `2.6.x`
+ * RESTHeart `0.9.x`
 
 The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds:
 
