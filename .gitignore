@@ -1,3 +1,7 @@
 .vagrant/
+.tmp/
+restheart
 restheart.log
-restheart*
+restheart-*
+restheart.tar.gz
+

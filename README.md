@@ -19,7 +19,7 @@ The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process
 
 ## Setup ##
 
-**Note**: You must have at least [Python](https://www.python.org/downloads/) 2.6+ installed in your host. Ansible doesn't support Python 3 yet. Python 2.x is installed by default on most Linux versions and Mac OSX. For Windows you can go [here](https://www.python.org/downloads/release/python-279/).
+> You must have at least [Python](https://www.python.org/downloads/) 2.6+ installed in your host. Ansible doesn't support Python 3 yet. Python 2.x is installed by default on most Linux versions and Mac OSX. For Windows you can go [here](https://www.python.org/downloads/release/python-279/).
 
  1. Install [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
  1. Install [Vagrant](https://www.vagrantup.com/downloads.html) 1.6+
@@ -40,25 +40,31 @@ Then install Ansible with:
  1. `cd` into the cloned repository folder
  1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8, all MongoDB packages and the **latest binary release of RESTHeart**.
 
+ > In case the mongod service doesn't start automatically, you could either run `vagrnat provision` again or log-in the VM (`vagrant ssh`) and issue `sudo service mongod start`
+
  ## The RESTHeart Service ##
 
-RESTHeart is installed in background as a system service named `restheartd`, which starts automatically at boot. It reads at startup the `restheart.yml` and `security.yml` configuration files present in `restheart/etc` folder. You can `tail -f restheart.log` in the `/vagrant` shared folder to verify that everything is up and running. The output should be similar to:
+RESTHeart is installed in background as a system service named `restheartd`, which starts automatically at boot (it uses the `restheartd.conf` configuration file).
 
-    23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - starting RESTHeart ********************************************
-    23:46:26.086 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.9.5
-    23:46:26.219 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017 
-    23:46:26.222 [main] INFO  c.s.restheart.Bootstrapper - mongodb connection pool initialized
-    23:46:27.298 [main] INFO  c.s.restheart.Bootstrapper - https listener bound at 0.0.0.0:4443
-    23:46:27.299 [main] INFO  c.s.restheart.Bootstrapper - http listener bound at 0.0.0.0:8080
-    23:46:27.305 [main] INFO  c.s.restheart.Bootstrapper - local cache enabled
-    23:46:27.411 [main] INFO  c.s.restheart.Bootstrapper - url / bound to mongodb resource *
-    23:46:27.594 [main] INFO  c.s.restheart.Bootstrapper - embedded static resources browser extracted in /tmp/restheart-4821268372483417156
-    23:46:27.609 [main] INFO  c.s.restheart.Bootstrapper - url /browser bound to static resources browser. access manager: false
-    23:46:27.612 [main] INFO  c.s.restheart.Bootstrapper - url /_logic/ping bound to application logic handler com.softinstigate.restheart.handlers.applicationlogic.PingHandler. access manager: false
-    23:46:27.621 [main] INFO  c.s.restheart.Bootstrapper - url /_logic/roles/mine bound to application logic handler com.softinstigate.restheart.handlers.applicationlogic.GetRoleHandler. access manager: false
-    23:46:27.925 [main] INFO  c.s.restheart.Bootstrapper - logging to /vagrant/restheart.log with level INFO
-    23:46:27.925 [main] INFO  c.s.restheart.Bootstrapper - stopping logging to console 
-    23:46:27.926 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart started **********************************************
+You can `tail -f tmp/restheart.log` in the `/vagrant` shared folder to verify that everything is up and running. The output should be similar to:
+
+    15:30:46.250 [Thread-2] INFO  c.s.restheart.Bootstrapper - stopping RESTHeart
+    15:30:46.256 [Thread-2] INFO  c.s.restheart.Bootstrapper - waiting for pending request to complete (up to 1 minute)
+    15:32:21.267 [main] INFO  c.s.restheart.Bootstrapper - starting RESTHeart ********************************************
+    15:32:21.279 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.9.5
+    15:32:21.413 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017 
+    15:32:21.416 [main] INFO  c.s.restheart.Bootstrapper - mongodb connection pool initialized
+    15:32:22.042 [main] WARN  c.s.restheart.Bootstrapper - ***** no identity manager specified. authentication disabled.
+    15:32:22.043 [main] WARN  c.s.restheart.Bootstrapper - ***** no access manager specified. users can do anything.
+    15:32:22.391 [main] INFO  c.s.restheart.Bootstrapper - https listener bound at 0.0.0.0:4443
+    15:32:22.391 [main] INFO  c.s.restheart.Bootstrapper - http listener bound at 0.0.0.0:8080
+    15:32:22.397 [main] INFO  c.s.restheart.Bootstrapper - local cache enabled
+    15:32:22.441 [main] INFO  c.s.restheart.Bootstrapper - url / bound to mongodb resource *
+    15:32:22.770 [main] INFO  c.s.restheart.Bootstrapper - embedded static resources browser extracted in /tmp/restheart-7371469076573689136
+    15:32:22.789 [main] INFO  c.s.restheart.Bootstrapper - url /browser bound to static resources browser. access manager: false
+    15:32:23.129 [main] INFO  c.s.restheart.Bootstrapper - logging to /tmp/restheart.log with level INFO
+    15:32:23.130 [main] INFO  c.s.restheart.Bootstrapper - logging to console with level INFO
+    15:32:23.130 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart started **********************************************
 
 To control the service, you can `vagrant ssh` into the guest box and type
 
@@ -66,11 +72,6 @@ To control the service, you can `vagrant ssh` into the guest box and type
 
 ## Use RESTHeart ##
 
-Connect to [`http://localhost:8080/browser`](http://localhost:8080/browser) to access the HAL browser. 
+If everything went fine, a running RESTheart server is listening at port 8080 and you could verify that by connecting to the embedded [HAL browser](http://localhost:8080/browser). 
 
-For authentication (see the `security.yml` configuration file):
-
- * user: `admin`
- * password: `changeit`
-
-Then have a look at the complete [documentation](http://restheart.org/docs/overview.html).
+Then have a look at the complete [documentation](http://restheart.org/docs/overview.html) for the next steps.

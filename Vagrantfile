@@ -21,8 +21,11 @@ Vagrant.configure(2) do |config|
   end
 
   # Forwarded ports for MongoDB and HTTP server
+  config.vm.network "forwarded_port", guest: 4443, host: 4443
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 27017, host: 27017
   config.vm.network "forwarded_port", guest: 28017, host: 28017
+
+  config.vm.synced_folder "tmp", "/tmp"
 
 end
