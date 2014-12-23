@@ -40,9 +40,9 @@ Then install Ansible with:
  1. `cd` into the cloned repository folder
  1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8, all MongoDB packages and the **latest binary release of RESTHeart**.
 
- > In case the mongod service doesn't start automatically, you could either run `vagrant provision` again or log-in the VM (`vagrant ssh`) and issue `sudo service mongod start`
+> In case the mongod service doesn't start automatically, you could either run `vagrant provision` again or log-in the VM (`vagrant ssh`) and issue `sudo service mongod start`
 
- ## The RESTHeart Service ##
+## The RESTHeart Service ##
 
 RESTHeart is installed in background as a system service named `restheartd`, which starts automatically at boot (it uses the `restheartd.conf` configuration file).
 
