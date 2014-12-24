@@ -4,7 +4,7 @@
     sudo: true
     sudo_user: root
     vars:
-        version: 0.9.6
+        version: 0.9.7
             
     tasks:
 
