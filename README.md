@@ -8,7 +8,7 @@ This is a complete Vagrant box for [RESTHart](http://restheart.org) REST API Ser
 
  * Virtualbox `4.3.x`
  * Vagrant `1.7.x`
- * MongoDB `2.6.x`
+ * MongoDB `2.6.6`
  * RESTHeart `0.9.x`
 
 The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds:
@@ -41,6 +41,17 @@ Then install Ansible with:
  1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8, all MongoDB packages and the **latest binary release of RESTHeart**.
 
 > In case the mongod service doesn't start automatically, you could either run `vagrant provision` again or log-in the VM (`vagrant ssh`) and issue `sudo service mongod start`
+
+If you spot the following error:
+
+    TASK: [MongoDB | Install] ***************************************************** 
+    <127.0.0.1> REMOTE_MODULE apt name=mongodb-org=2.6.6 state=present update_cache=yes cache_valid_time=259200
+    failed: [default] => {"failed": true}
+    msg: No package matching 'mongodb-org' is available
+
+    FATAL: all hosts have already failed -- aborting
+
+Then try to run the `vagrant provision` command again. This seems to be a random networking problem with the repository hosting Debian packages, which is often very slow.
 
 ## The RESTHeart Service ##
 

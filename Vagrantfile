@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
   # VM coordinates
   config.vm.box = "ubuntu/trusty64"
   config.vm.box_url = "https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
-  config.vm.hostname = "restheart"
+  config.vm.hostname = "dev-vm"
 
   # CPU and memory usage
   config.vm.provider "virtualbox" do |v|
@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
   # Ansible provisioner
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "playbook.yml"
-    ansible.verbose = "v"
+    ansible.verbose = "vv"
   end
 
   # Forwarded ports for MongoDB and HTTP server

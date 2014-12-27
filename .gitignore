@@ -1,5 +1,5 @@
 .vagrant/
-.tmp/
+tmp/
 restheart
 restheart.log
 restheart-*

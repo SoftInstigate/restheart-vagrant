@@ -5,8 +5,13 @@
     sudo_user: root
     vars:
         version: 0.9.7
+        cache_timeout: 259200
             
     tasks:
+
+    # Uncomment the two lines below if you want to update the system
+    # -   name: System | Upgrade safe
+    #    apt: upgrade=safe update_cache=yes cache_valid_time={{ cache_timeout }}
 
     -   name: JDK | Install repo ppa
         apt_repository: repo='ppa:webupd8team/java' state=present
@@ -15,7 +20,7 @@
         shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 
     -   name: JDK | Install oracle-java8-installer
-        apt: name=oracle-java8-installer state=present force=yes update_cache=yes cache_valid_time=86400
+        apt: name=oracle-java8-installer state=present force=yes update_cache=yes cache_valid_time={{ cache_timeout }}
    
     -   name: JDK | Install oracle-java8-set-default 
         apt: name=oracle-java8-set-default state=present
