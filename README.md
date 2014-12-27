@@ -25,7 +25,7 @@ The Vagrant box is a plain Ubuntu Trusty64 (14.04 LTS). The provisioning process
  1. Install [Vagrant](https://www.vagrantup.com/downloads.html) 1.6+
  1. Install [Ansible](http://docs.ansible.com/intro_installation.html).
 
-Ansible can be universally installed via `pip`, the Python package manager. If `pip` isn’t already available in your distribution of Python, you can get pip by:
+Ansible can be universally installed via `pip`, the Python package manager. If `pip` isn't already available in your distribution of Python, you can get pip by:
 
     $ sudo easy_install pip
 
@@ -51,7 +51,9 @@ If you spot the following error:
 
     FATAL: all hosts have already failed -- aborting
 
-Then try to run the `vagrant provision` command again. This seems to be a random networking problem with the repository hosting Debian packages, which is often very slow.
+Then try stop the VM with `vagrant halt` and start it again with `vagrant up --provision`. This seems to be a random networking problem with the MongoDB repository hosting Debian packages.
+
+Anyway, most errors appearing on the very first startup usually disappear after a halt and restart with re-provisioning (`vagrant up --provision`). When everything is up and running then you don't need to re-provision anymore, unless a new RESTHeart version is available, but the process will selectively re-install only what is actually new.
 
 ## The RESTHeart Service ##
 
