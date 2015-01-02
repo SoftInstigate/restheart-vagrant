@@ -33,6 +33,9 @@
   - name: MongoDB | Install 
     apt: name=mongodb-org=2.6.6 state=present update_cache=yes
 
+  - name: MongoDB | Comment-out the bind_ip
+    lineinfile: dest=/etc/mongod.conf regexp=^bind_ip line="#bind_ip = 127.0.0.1"
+
   - name: MongoDB | Ensure deamon is running correctly
     service: name=mongod enabled=yes state=started
 
