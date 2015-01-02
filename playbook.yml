@@ -1,56 +1,55 @@
 ---
--   hosts: all
-    user: vagrant
-    sudo: true
-    sudo_user: root
-    vars:
-        version: 0.9.7
-        cache_timeout: 259200
-            
-    tasks:
+- hosts: all
+  user: vagrant
+  sudo: true
+  sudo_user: root
+  vars:
+    version: 0.9.7
+    cache_timeout: 259200
 
-    # Uncomment the two lines below if you want to update the system
-    # -   name: System | Upgrade safe
-    #    apt: upgrade=safe update_cache=yes cache_valid_time={{ cache_timeout }}
+  tasks:
+  # Uncomment the two lines below if you want to update the whole system 
+  # - name: System | Upgrade safe
+  #    apt: upgrade=safe update_cache=yes cache_valid_time={{ cache_timeout }}
 
-    -   name: JDK | Install repo ppa
-        apt_repository: repo='ppa:webupd8team/java' state=present
+  - name: JDK | Install repo ppa
+    apt_repository: repo='ppa:webupd8team/java' state=present
 
-    -   name: JDK | Automatically select the Oracle License
-        shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+  - name: JDK | Automatically select the Oracle License
+    shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 
-    -   name: JDK | Install oracle-java8-installer
-        apt: name=oracle-java8-installer state=present force=yes update_cache=yes cache_valid_time={{ cache_timeout }}
+  - name: JDK | Install oracle-java8-installer
+    apt: name=oracle-java8-installer state=present force=yes update_cache=yes cache_valid_time={{ cache_timeout }}
    
-    -   name: JDK | Install oracle-java8-set-default 
-        apt: name=oracle-java8-set-default state=present
+  - name: JDK | Install oracle-java8-set-default 
+    apt: name=oracle-java8-set-default state=present
 
-    -   name: MongoDB | Fetch 10Gen signing key
-        shell: apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+  - name: MongoDB | Fetch 10Gen signing key
+    shell: apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 
-    -   name: MongoDB | Add 10Gen repository
-        shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+  - name: MongoDB | Add 10Gen repository
+    shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 
-    -   name: MongoDB | Install 
-        apt: name=mongodb-org=2.6.6 state=present update_cache=yes
+  - name: MongoDB | Install 
+    apt: name=mongodb-org=2.6.6 state=present update_cache=yes
 
-    -   name: MongoDB | Ensure deamon is running correctly
-        service: name=mongod enabled=yes state=started
+  - name: MongoDB | Ensure deamon is running correctly
+    service: name=mongod enabled=yes state=started
 
-    -   name: RESTHeart | Download latest stable release
-        get_url: url=https://github.com/SoftInstigate/restheart/releases/download/{{ version }}/restheart-{{ version }}.tar.gz dest=/vagrant/restheart.tar.gz timeout=30
-        register: download_restheart
+  - name: RESTHeart | Download latest stable release
+    get_url: url=https://github.com/SoftInstigate/restheart/releases/download/{{ version }}/restheart-{{ version }}.tar.gz dest=/vagrant/restheart.tar.gz timeout=30
+    register: download_restheart
 
-    -   name: RESTHeart | Unarchive
-        unarchive: src=restheart.tar.gz dest=/vagrant
-        when: download_restheart.changed
+  - name: RESTHeart | Unarchive
+    unarchive: src=restheart.tar.gz dest=/vagrant
+    when: download_restheart.changed
 
-    -   name: RESTHEart | Create symlink to main folder
-        file: src=restheart-{{ version }} dest=/vagrant/restheart owner=vagrant state=link
-        when: download_restheart.changed
+  - name: RESTHEart | Create symlink to main folder
+    file: src=restheart-{{ version }} dest=/vagrant/restheart owner=vagrant state=link
+    when: download_restheart.changed
 
-    -   name: RESTHeart | Copy resthartd.conf
-        copy: src=restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644
+  - name: RESTHeart | Copy resthartd.conf
+    copy: src=restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644
 
-    -   name: RESTHeart | Enable service
-        service: name=restheartd enabled=yes state=started  
+  - name: RESTHeart | Enable service
+    service: name=restheartd enabled=yes state=started  
