@@ -4,7 +4,8 @@
   sudo: true
   sudo_user: root
   vars:
-    version: 0.9.7
+    restheart_version: 0.10.0
+    mongodb_version: 2.6.7
     cache_timeout: 259200
 
   tasks:
@@ -31,7 +32,7 @@
     shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 
   - name: MongoDB | Install 
-    apt: name=mongodb-org=2.6.6 state=present update_cache=yes
+    apt: name=mongodb-org={{ mongodb_version }} state=present update_cache=yes
 
   - name: MongoDB | Comment-out the bind_ip
     lineinfile: dest=/etc/mongod.conf regexp=^bind_ip line="#bind_ip = 127.0.0.1"
@@ -40,7 +41,7 @@
     service: name=mongod enabled=yes state=started
 
   - name: RESTHeart | Download latest stable release
-    get_url: url=https://github.com/SoftInstigate/restheart/releases/download/{{ version }}/restheart-{{ version }}.tar.gz dest=/vagrant/restheart.tar.gz timeout=30
+    get_url: url=https://github.com/SoftInstigate/restheart/releases/download/{{ restheart_version }}/restheart-{{ restheart_version }}.tar.gz dest=/vagrant/restheart.tar.gz timeout=30
     register: download_restheart
 
   - name: RESTHeart | Unarchive
@@ -48,7 +49,7 @@
     when: download_restheart.changed
 
   - name: RESTHEart | Create symlink to main folder
-    file: src=restheart-{{ version }} dest=/vagrant/restheart owner=vagrant state=link
+    file: src=restheart-{{ restheart_version }} dest=/vagrant/restheart owner=vagrant state=link
     when: download_restheart.changed
 
   - name: RESTHeart | Copy resthartd.conf
