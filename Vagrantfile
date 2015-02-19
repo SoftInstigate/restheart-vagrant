@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "db" do |db|
     db.vm.hostname = "db-vm"
-    config.vm.network "private_network", ip: "192.168.50.4"
+    db.vm.network "private_network", ip: "192.168.50.4"
 
     # CPU and memory usage
     db.vm.provider "virtualbox" do |v|
@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "api" do |api|
     api.vm.hostname = "api-vm"
-    config.vm.network "private_network", ip: "192.168.50.5"
+    api.vm.network "private_network", ip: "192.168.50.5"
 
     # CPU and memory usage
     api.vm.provider "virtualbox" do |v|
