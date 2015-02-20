@@ -5,49 +5,40 @@ Vagrant.configure(2) do |config|
   # VM coordinates
   config.vm.box = "ubuntu/trusty64"
   config.vm.box_url = "https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
+  config.ssh.insert_key = false
+  FORWARD_PORTS = true
 
-  config.vm.define "db" do |db|
-    db.vm.hostname = "db-vm"
-    db.vm.network "private_network", ip: "192.168.50.4"
+  servers = {
+    :db => ["192.168.50.4", 27017, 27017],
+    :api => ["192.168.50.5", 8080, 8080]
+  }
 
-    # CPU and memory usage
-    db.vm.provider "virtualbox" do |v|
-      v.memory = 512
-      v.cpus = 1
+  servers.each do |server_name, value|
+    config.vm.define server_name do |s|
+      s.vm.hostname = "#{server_name}-vm"
+      s.vm.network "private_network", ip: value[0]
+
+      # CPU and memory usage
+      s.vm.provider "virtualbox" do |v|
+        v.memory = 512
+        v.cpus = 1
+      end
+
+      # Ansible provisioner
+      s.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook-#{server_name}.yml"
+        ansible.sudo = true
+        ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
+        ansible.host_key_checking = false
+        ansible.verbose = "vv"
+        ansible.limit = "all"
+      end
+
+      # Forwarded ports
+      if FORWARD_PORTS
+        puts "Forwarded guest #{value[1]} port to host #{value[2]} port"
+        s.vm.network "forwarded_port", guest: value[1], host: value[2]
+      end
     end
-
-    # Ansible provisioner
-    db.vm.provision "ansible" do |ansible|
-      ansible.playbook = "playbook-db.yml"
-      ansible.verbose = "vv"
-    end
-
-    # Forwarded ports for MongoDB
-    db.vm.network "forwarded_port", guest: 27017, host: 37017
-    db.vm.network "forwarded_port", guest: 28017, host: 38017
   end
-
-  config.vm.define "api" do |api|
-    api.vm.hostname = "api-vm"
-    api.vm.network "private_network", ip: "192.168.50.5"
-
-    # CPU and memory usage
-    api.vm.provider "virtualbox" do |v|
-      v.memory = 512
-      v.cpus = 1
-    end
-
-    # Ansible provisioner
-    api.vm.provision "ansible" do |ansible|
-      ansible.playbook = "playbook-api.yml"
-      ansible.verbose = "vv"
-    end
-
-    # Forwarded ports for MongoDB and HTTP server
-    api.vm.network "forwarded_port", guest: 4443, host: 4443
-    api.vm.network "forwarded_port", guest: 8080, host: 8080
-
-    api.vm.synced_folder "tmp", "/tmp"
-  end
-
 end
