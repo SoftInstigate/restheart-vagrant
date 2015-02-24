@@ -7,15 +7,15 @@
 ---
 users:
     - userid: user1
-      password: changeit
+      password: user1
       roles: [powerusers]
           
     - userid: user2
-      password: changeit
+      password: user2
       roles: [users]
     
     - userid: admin
-      password: changeit
+      password: admin
       roles: [users, admins]
       
 permissions:

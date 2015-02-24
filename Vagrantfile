@@ -1,12 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+FORWARD_PORTS = true
+
 Vagrant.configure(2) do |config|
   # VM coordinates
   config.vm.box = "ubuntu/trusty64"
   config.vm.box_url = "https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
   config.ssh.insert_key = false
-  FORWARD_PORTS = true
 
   servers = {
     :db => ["192.168.50.4", 27017, 27017],
@@ -36,7 +37,7 @@ Vagrant.configure(2) do |config|
 
       # Forwarded ports
       if FORWARD_PORTS
-        puts "Forwarded guest #{value[1]} port to host #{value[2]} port"
+        puts "'#{server_name}': forwarded guest #{value[1]} port to host #{value[2]} port"
         s.vm.network "forwarded_port", guest: value[1], host: value[2]
       end
     end
