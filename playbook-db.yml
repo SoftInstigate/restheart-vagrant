@@ -4,7 +4,7 @@
   sudo: true
   sudo_user: root
   vars:
-    mongodb_version: 3.0.0
+    mongodb_version: 3.0.1
     cache_timeout: 259200
 
   tasks:
