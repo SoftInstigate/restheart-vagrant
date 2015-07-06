@@ -8,7 +8,7 @@ This project enables a set of two distinct Vagrant boxes for [RESTHart](http://r
 
  * Virtualbox `4.3.x`
  * Vagrant `1.7.x`
- * MongoDB `3.0.0.`
+ * MongoDB `3.0.x`
  * RESTHeart `0.10.x`
 
 The two Vagrant boxes are both plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds two boxes, one named `db-vm` and one names `api-vm`.
@@ -44,7 +44,9 @@ Then install Ansible with:
  1. `cd` into the cloned repository folder
  1. run `vagrant up --provision`. It will take several minutes, depending on your Internet connection, as it needs to download and install the JDK 8, all MongoDB packages and the **latest binary release of RESTHeart**.
 
- The provisioning process adds two entries in `/etc/hosts` in your Linux or Mac OSX host machine (if you run Vagrant on Windows it will be different, but we have not tested this with Windows yet). In this phase you might be required to enter your host's password, so that the file can be updated.
+ The provisioning process adds two entries in `/etc/hosts` in your Linux or Mac OSX host machine (if you run Vagrant on Windows it will be different, but we have not tested this with Windows yet).
+
+ *Note*: In this phase you might be required to enter your host's password, so that the file can be updated.
 
 > Usually we have found that the mongod service does not bind correctly after creation, so you can log-in the VM (`vagrant ssh db`) and issue `sudo service mongod start`. This happens only once after the very first `vagrant up`.
 

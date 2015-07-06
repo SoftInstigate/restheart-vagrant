@@ -4,7 +4,6 @@
   sudo: true
   sudo_user: root
   vars:
-    mongodb_version: 3.0.0
     cache_timeout: 259200
 
   tasks:
@@ -15,7 +14,7 @@
     shell: echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 
   - name: MongoDB | Install 
-    apt: name=mongodb-org={{ mongodb_version }} state=present update_cache=yes
+    apt: name=mongodb-org state=present update_cache=yes
 
   - name: MongoDB | Comment-out the bind_ip
     lineinfile: dest=/etc/mongod.conf regexp=^bind_ip line="#bind_ip = 127.0.0.1"
