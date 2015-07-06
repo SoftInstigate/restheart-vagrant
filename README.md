@@ -48,7 +48,7 @@ Then install Ansible with:
 
  *Note*: In this phase you might be required to enter your host's password, so that the file can be updated.
 
-> Usually we have found that the mongod service does not bind correctly after creation, so you can log-in the VM (`vagrant ssh db`) and issue `sudo service mongod start`. This happens only once after the very first `vagrant up`.
+> Usually we have found that the mongod service does not bind correctly after creation, so you can log-in the VM (`vagrant ssh db`) and issue `sudo service mongod restart`. This happens only once after the very first `vagrant up`.
 
 Anyway, most errors appearing on the very first startup usually disappear after a halt and restart (`vagrant reload`). When everything is up and running then you don't need to re-provision anymore, unless a new RESTHeart version is available, but the process will selectively re-install only what is new.
 
