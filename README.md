@@ -9,7 +9,7 @@ This project enables a set of two distinct Vagrant boxes for [RESTHart](http://r
  * Virtualbox `4.3.x`
  * Vagrant `1.7.x`
  * MongoDB `3.0.x`
- * RESTHeart `0.10.x`
+ * RESTHeart `1.0.x`
 
 The two Vagrant boxes are both plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds two boxes, one named `db-vm` and one names `api-vm`.
 
