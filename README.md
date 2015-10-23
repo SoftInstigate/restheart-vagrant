@@ -92,3 +92,6 @@ Please have a look at the complete [documentation](http://restheart.org/docs/ove
 
 **Note**: alternatively, have a look at our [Docker](https://github.com/SoftInstigate/restheart-docker) solution.
 
+<hr></hr>
+
+_Made with :heart: by [The SoftInstigate Team](http://www.softinstigate.com/). Follow us on [Twitter](https://twitter.com/softinstigate)_.
