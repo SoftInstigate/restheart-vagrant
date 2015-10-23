@@ -1,5 +1,7 @@
 # Vagrant boxes for RESTHeart #
 
+> **Note**: if you prefer to use Docker [go here](https://github.com/SoftInstigate/restheart-docker).
+
 This project enables a set of two distinct Vagrant boxes for [RESTHart](http://restheart.org) REST API Server and MongoDB. It uses the [Ansible provisioner](https://docs.vagrantup.com/v2/provisioning/ansible.html).
 
 > RESTHeart is the REST API server for [MongoDB](https://www.mongodb.org). It is written in **Java 8** and built on top of the [Undertow](http://undertow.io) non-blocking Web server. It exposes all its functions via HTTP and allows, for example, to fully manage a MongoDB database with just `curl` or from a JavaScript client running in a browser. 
