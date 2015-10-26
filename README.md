@@ -1,6 +1,6 @@
 # Vagrant boxes for RESTHeart #
 
-> **Note**: if you prefer to use Docker [go here](https://github.com/SoftInstigate/restheart-docker).
+> **Note**: our favorite way to run RESTHeart is [Docker](https://github.com/SoftInstigate/restheart-docker). This Vagrant repository is kept as a reference but we are not evolving it anymore.
 
 This project enables a set of two distinct Vagrant boxes for [RESTHart](http://restheart.org) REST API Server and MongoDB. It uses the [Ansible provisioner](https://docs.vagrantup.com/v2/provisioning/ansible.html).
 
