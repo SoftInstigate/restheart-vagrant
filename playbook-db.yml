@@ -17,7 +17,7 @@
     apt: name=mongodb-org state=present update_cache=yes
 
   - name: MongoDB | Comment-out the bind_ip
-    lineinfile: dest=/etc/mongod.conf regexp=^bindIp line="#bindIp: 127.0.0.1"
+    lineinfile: 'dest=/etc/mongod.conf regexp=bindIp line="  bindIp: 0.0.0.0"'
 
   - name: MongoDB | Ensure deamon is running correctly
     service: name=mongod enabled=yes state=started
