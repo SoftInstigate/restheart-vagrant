@@ -4,14 +4,14 @@
 
 This project enables a set of two distinct Vagrant boxes for [RESTHart](http://restheart.org) REST API Server and MongoDB. It uses the [Ansible provisioner](https://docs.vagrantup.com/v2/provisioning/ansible.html).
 
-> RESTHeart is the REST API server for [MongoDB](https://www.mongodb.org). It is written in **Java 8** and built on top of the [Undertow](http://undertow.io) non-blocking Web server. It exposes all its functions via HTTP and allows, for example, to fully manage a MongoDB database with just `curl` or from a JavaScript client running in a browser. 
+> RESTHeart is the REST API server for [MongoDB](https://www.mongodb.org). It is written in **Java 8** and built on top of the [Undertow](http://undertow.io) non-blocking Web server. It exposes all its functions via HTTP and allows, for example, to fully manage a MongoDB database with just `curl` or from a JavaScript client running in a browser.
 
 **Tested with:**
 
  * Virtualbox `4.3.x`
  * Vagrant `1.7.x`
  * MongoDB `3.0.x`
- * RESTHeart `1.0.x`
+ * RESTHeart `1.1.x`
 
 The two Vagrant boxes are both plain Ubuntu Trusty64 (14.04 LTS). The provisioning process adds two boxes, one named `db-vm` and one names `api-vm`.
 
@@ -68,7 +68,7 @@ You can `tail -f tmp/restheart.log` in the `/vagrant` shared folder to verify th
     15:30:46.256 [Thread-2] INFO  c.s.restheart.Bootstrapper - waiting for pending request to complete (up to 1 minute)
     15:32:21.267 [main] INFO  c.s.restheart.Bootstrapper - starting RESTHeart ********************************************
     15:32:21.279 [main] INFO  c.s.restheart.Bootstrapper - RESTHeart version 0.10.0
-    15:32:21.413 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017 
+    15:32:21.413 [main] INFO  c.s.restheart.Bootstrapper - initializing mongodb connection pool to 127.0.0.1:27017
     15:32:21.416 [main] INFO  c.s.restheart.Bootstrapper - mongodb connection pool initialized
     15:32:22.042 [main] WARN  c.s.restheart.Bootstrapper - ***** no identity manager specified. authentication disabled.
     15:32:22.043 [main] WARN  c.s.restheart.Bootstrapper - ***** no access manager specified. users can do anything.
@@ -88,7 +88,7 @@ To control the service, you can `vagrant ssh api` into the `api` guest box and t
 
 ## Use RESTHeart ##
 
-If everything went fine, a running RESTHeart server is listening at port 8080 of the `api` VM while MongoDB will listen to port 27017 of the `db` VM. Verify that by connecting to the embedded [HAL browser](http://localhost:8080/browser). 
+If everything went fine, a running RESTHeart server is listening at port 8080 of the `api` VM while MongoDB will listen to port 27017 of the `db` VM. Verify that by connecting to the embedded [HAL browser](http://localhost:8080/browser).
 
 Please have a look at the complete [documentation](http://restheart.org/docs/overview.html) for the next steps or, in case of problems, check our [Support page](http://restheart.org/support.html).
 
