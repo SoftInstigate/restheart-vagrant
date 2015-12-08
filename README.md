@@ -1,5 +1,7 @@
 # Vagrant boxes for RESTHeart #
 
+> **Note**: our favorite way to run RESTHeart is [Docker](https://github.com/SoftInstigate/restheart-docker). This Vagrant repository is kept as a reference but we are not evolving it anymore.
+
 This project enables a set of two distinct Vagrant boxes for [RESTHart](http://restheart.org) REST API Server and MongoDB. It uses the [Ansible provisioner](https://docs.vagrantup.com/v2/provisioning/ansible.html).
 
 > RESTHeart is the REST API server for [MongoDB](https://www.mongodb.org). It is written in **Java 8** and built on top of the [Undertow](http://undertow.io) non-blocking Web server. It exposes all its functions via HTTP and allows, for example, to fully manage a MongoDB database with just `curl` or from a JavaScript client running in a browser. 
@@ -89,3 +91,9 @@ To control the service, you can `vagrant ssh api` into the `api` guest box and t
 If everything went fine, a running RESTHeart server is listening at port 8080 of the `api` VM while MongoDB will listen to port 27017 of the `db` VM. Verify that by connecting to the embedded [HAL browser](http://localhost:8080/browser). 
 
 Please have a look at the complete [documentation](http://restheart.org/docs/overview.html) for the next steps or, in case of problems, check our [Support page](http://restheart.org/support.html).
+
+**Note**: alternatively, have a look at our [Docker](https://github.com/SoftInstigate/restheart-docker) solution.
+
+<hr></hr>
+
+_Made with :heart: by [The SoftInstigate Team](http://www.softinstigate.com/). Follow us on [Twitter](https://twitter.com/softinstigate)_.
