@@ -4,11 +4,11 @@
   sudo: true
   sudo_user: root
   vars:
-    restheart_version: 1.0.0
+    restheart_version: 1.1.0
     cache_timeout: 259200
 
   tasks:
-  # Uncomment the two lines below if you want to update the whole system 
+  # Uncomment the two lines below if you want to update the whole system
   # - name: System | Upgrade safe
   #    apt: upgrade=safe update_cache=yes cache_valid_time={{ cache_timeout }}
 
@@ -20,8 +20,8 @@
 
   - name: JDK | Install oracle-java8-installer
     apt: name=oracle-java8-installer state=present force=yes update_cache=yes cache_valid_time={{ cache_timeout }}
-   
-  - name: JDK | Install oracle-java8-set-default 
+
+  - name: JDK | Install oracle-java8-set-default
     apt: name=oracle-java8-set-default state=present
 
   - name: RESTHeart | Download latest stable release
@@ -40,4 +40,4 @@
     copy: src=restheartd.conf dest=/etc/init/restheartd.conf owner=root mode=0644
 
   - name: RESTHeart | Enable service
-    service: name=restheartd enabled=yes state=started  
+    service: name=restheartd enabled=yes state=started
