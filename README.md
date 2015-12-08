@@ -8,7 +8,7 @@ This project enables a set of two distinct Vagrant boxes for [RESTHart](http://r
 
 **Tested with:**
 
- * Virtualbox `4.3.x`
+ * Virtualbox `5.x`
  * Vagrant `1.7.x`
  * MongoDB `3.0.x`
  * RESTHeart `1.1.x`
