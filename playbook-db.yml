@@ -13,12 +13,11 @@
   - name: MongoDB | Add 10Gen repository
     shell: echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 
-  - name: MongoDB | Install 
+  - name: MongoDB | Install
     apt: name=mongodb-org state=present update_cache=yes
 
   - name: MongoDB | Comment-out the bind_ip
-    lineinfile: dest=/etc/mongod.conf regexp=^bind_ip line="#bind_ip = 127.0.0.1"
+    lineinfile: dest=/etc/mongod.conf regexp=^bindIp line="#bindIp: 127.0.0.1"
 
   - name: MongoDB | Ensure deamon is running correctly
     service: name=mongod enabled=yes state=started
-
