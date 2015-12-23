@@ -4,7 +4,7 @@
   sudo: true
   sudo_user: root
   vars:
-    restheart_version: 1.1.0
+    restheart_version: 1.1.2
     cache_timeout: 259200
 
   tasks:
